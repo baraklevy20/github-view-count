@@ -19,6 +19,6 @@
   "homepage": "https://github.com/baraklevy20/github-view-count#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "text-to-image": "^2.3.0"
+    "mustache": "^4.0.1"
   }
 }
