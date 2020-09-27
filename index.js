@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 let counter = 0;
 
-app.get('/view-count', async (req, res) => {
+app.get('/', async (req, res) => {
   counter += 1;
   const template = fs.readFileSync('./view-count.svg').toString();
   const viewSvg = Mustache.render(template, { counter });
