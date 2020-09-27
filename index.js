@@ -5,10 +5,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 let counter = 0;
 
-app.get('/view-count.svg', async (req, res) => {
+app.get('/view-count', async (req, res) => {
   counter += 1;
   const template = fs.readFileSync('./view-count.svg').toString();
-  const viewSvg = Mustache.render(template, {counter});
+  const viewSvg = Mustache.render(template, { counter });
+  res.setHeader('content-type', 'image/svg+xml');
   res.send(viewSvg);
 });
 
