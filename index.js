@@ -10,6 +10,7 @@ app.get('/view-count', async (req, res) => {
   const template = fs.readFileSync('./view-count.svg').toString();
   const viewSvg = Mustache.render(template, { counter });
   res.setHeader('content-type', 'image/svg+xml');
+  res.setHeader('cache-control', 'max-age=0, no-cache, no-store, must-revalidate');
   res.send(viewSvg);
 });
 
