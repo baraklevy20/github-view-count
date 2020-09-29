@@ -1,8 +1,9 @@
 const {Pool} = require('pg');
 const pool = new Pool({
-  // user: 'postgres',
-  // password: 'a123',
-  // // host: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 const _ = require('lodash');
 
