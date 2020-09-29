@@ -1,23 +1,13 @@
 const express = require('express');
-const Mustache = require('mustache');
-const fs = require('fs');
 const db = require('./db');
+const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', async (req, res) => {
-  await db.increaseCounter();
-  const counter = await db.getCounter();
-  const template = fs.readFileSync('./view-count.svg').toString();
-  const viewSvg = Mustache.render(template, {counter});
-  res.setHeader('content-type', 'image/svg+xml');
-  res.setHeader(
-    'cache-control',
-    'max-age=0, no-cache, no-store, must-revalidate',
-  );
-  res.send(viewSvg);
-});
+app.use('/', routes);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+db.createCounterTable().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
+})
