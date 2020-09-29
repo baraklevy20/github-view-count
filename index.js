@@ -1,16 +1,20 @@
 const express = require('express');
 const Mustache = require('mustache');
 const fs = require('fs');
+const db = require('./db');
 const app = express();
 const port = process.env.PORT || 3000;
-let counter = 0;
 
 app.get('/', async (req, res) => {
-  counter += 1;
+  await db.increaseCounter();
+  const counter = await db.getCounter();
   const template = fs.readFileSync('./view-count.svg').toString();
-  const viewSvg = Mustache.render(template, { counter });
+  const viewSvg = Mustache.render(template, {counter});
   res.setHeader('content-type', 'image/svg+xml');
-  res.setHeader('cache-control', 'max-age=0, no-cache, no-store, must-revalidate');
+  res.setHeader(
+    'cache-control',
+    'max-age=0, no-cache, no-store, must-revalidate',
+  );
   res.send(viewSvg);
 });
 
